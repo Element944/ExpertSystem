@@ -1,22 +1,38 @@
 import streamlit as st
 import clips
 import os
+# ======================================
+# 核心加速：缓存 NLP 模型和 CLIPS 环境
+# ======================================
 
-# NLP for Semantic Similarity
-try:
-    import spacy
-    # Load medium English model with word vectors
-    nlp = spacy.load("en_core_web_md")
-    NLP_AVAILABLE = True
-except ImportError:
-    nlp = None
-    NLP_AVAILABLE = False
-    print("⚠️ Spacy not installed. Install with: pip install spacy")
-    print("   Then download model: python -m spacy download en_core_web_md")
-except OSError:
-    nlp = None
-    NLP_AVAILABLE = False
-    print("⚠️ Spacy model not found. Download with: python -m spacy download en_core_web_md")
+@st.cache_resource
+def get_nlp():
+    try:
+        import spacy
+        # 在 Cloud 上，模型加载后会一直常驻内存，不再重复读取磁盘
+        return spacy.load("en_core_web_md")
+    except ImportError:
+        print("⚠️ Spacy not installed. Install with: pip install spacy")
+        print("   Then download model: python -m spacy download en_core_web_md")
+    except OSError:
+        print("⚠️ Spacy model not found. Download with: python -m spacy download en_core_web_md")
+    except:
+        return None
+
+@st.cache_resource
+def get_clips_env():
+    # 这样 CLIPS 的 rules.clp 只会在应用启动时加载一次
+    _env = clips.Environment()
+    try:
+        _env.load("rules.clp")
+    except Exception as e:
+        print(f"Error loading rules: {e}")
+    return _env
+
+# 调用
+nlp = get_nlp()
+NLP_AVAILABLE = nlp is not None
+env = get_clips_env()
 
 # ======================================
 # 0. KNOWLEDGE CONFIGURATION
