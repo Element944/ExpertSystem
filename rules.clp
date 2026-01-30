@@ -9,7 +9,7 @@
    (slot fault) (slot solution) (slot category) (slot citation) (slot cf (type FLOAT) (default 0.0)))
 
 ;; =========================================================
-;; 2. AUDIO & SOUND RULES (整合 Source A & B)
+;; 2. AUDIO & SOUND RULES 
 ;; =========================================================
 
 ;; [Source A] Driver Issue
@@ -66,7 +66,7 @@
       (cf ?final_cf))))
 
 ;; =========================================================
-;; 3. THERMAL & CPU RULES (整合 Source A & B)
+;; 3. THERMAL & CPU RULES 
 ;; =========================================================
 
 ;; [Source A] Overheating Threshold
@@ -123,7 +123,7 @@
       (cf ?final_cf))))
 
 ;; =========================================================
-;; 4. STORAGE RULES (整合 Source A & B)
+;; 4. STORAGE RULES 
 ;; =========================================================
 
 ;; [Source A] Wear & Tear
@@ -181,7 +181,7 @@
       (cf ?final_cf))))
 
 ;; =========================================================
-;; 5. DISPLAY RULES (整合 Source A & B)
+;; 5. DISPLAY RULES 
 ;; =========================================================
 
 ;; [Source A & B] Physical Damage Consensus
@@ -212,7 +212,7 @@
       (cf ?final_cf))))
 
 ;; =========================================================
-;; 6. POWER & STARTUP (整合 Source A & B)
+;; 6. POWER & STARTUP 
 ;; =========================================================
 
 ;; [Source A & B] Total Power Fail
