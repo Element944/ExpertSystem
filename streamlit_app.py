@@ -2,14 +2,14 @@ import streamlit as st
 import clips
 import os
 # ======================================
-# 核心加速：缓存 NLP 模型和 CLIPS 环境
+# Core acceleration: cache NLP model and CLIPS environment
 # ======================================
 
 @st.cache_resource
 def get_nlp():
     try:
         import spacy
-        # 在 Cloud 上，模型加载后会一直常驻内存，不再重复读取磁盘
+        # On cloud, the model stays resident in memory after loading and won't be reloaded from disk
         return spacy.load("en_core_web_md")
     except ImportError:
         print("⚠️ Spacy not installed. Install with: pip install spacy")
@@ -21,7 +21,7 @@ def get_nlp():
 
 @st.cache_resource
 def get_clips_env():
-    # 这样 CLIPS 的 rules.clp 只会在应用启动时加载一次
+    # Ensure CLIPS rules.clp is loaded only once at app startup
     _env = clips.Environment()
     try:
         _env.load("rules.clp")
@@ -29,7 +29,7 @@ def get_clips_env():
         print(f"Error loading rules: {e}")
     return _env
 
-# 调用
+# Invocation
 nlp = get_nlp()
 NLP_AVAILABLE = nlp is not None
 env = get_clips_env()
